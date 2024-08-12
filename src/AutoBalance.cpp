@@ -371,6 +371,7 @@ static bool EnableGlobal;
 static bool Enable5M, Enable10M, Enable15M, Enable20M, Enable25M, Enable40M;
 static bool Enable5MHeroic, Enable10MHeroic, Enable25MHeroic;
 static bool EnableOtherNormal, EnableOtherHeroic;
+static bool MinLevelCheck, MaxLevelCheck;
 //npcbot
 static bool EnableWorld;
 //end npcbot
@@ -3245,6 +3246,10 @@ class AutoBalance_WorldScript : public WorldScript
         Enable25MHeroic = sConfigMgr->GetOption<bool>("AutoBalance.Enable.25MHeroic", sConfigMgr->GetOption<bool>("AutoBalance.enable", 1, false));
         EnableOtherHeroic = sConfigMgr->GetOption<bool>("AutoBalance.Enable.OtherHeroic", sConfigMgr->GetOption<bool>("AutoBalance.enable", 1, false));
 
+        // Custom options
+        MinLevelCheck = sConfigMgr->GetOption<bool>("AutoBalance.Enable.MinLevelCheck", sConfigMgr->GetOption<bool>("AutoBalance.enable", 1, false));        
+        MaxLevelCheck = sConfigMgr->GetOption<bool>("AutoBalance.Enable.MaxLevelCheck", sConfigMgr->GetOption<bool>("AutoBalance.enable", 1, false));
+
         // Deprecated setting warning
         if (sConfigMgr->GetOption<int>("AutoBalance.DungeonsOnly", -1, false) != -1)
             LOG_WARN("server.loading", "mod-autobalance: deprecated value `AutoBalance.DungeonsOnly` defined in `AutoBalance.conf`. This variable has been removed and has no effect. Please see `AutoBalance.conf.dist` for more details.");
@@ -5471,8 +5476,8 @@ public:
         // if this is a trigger, still modify it
         if (
             (
-                (creatureABInfo->UnmodifiedLevel < (uint8)(((float)mapABInfo->lfgMinLevel * .85f) + 0.5f)) ||
-                (creatureABInfo->UnmodifiedLevel > (uint8)(((float)mapABInfo->lfgMaxLevel * 1.15f) + 0.5f))
+                ((creatureABInfo->UnmodifiedLevel < (uint8)(((float)mapABInfo->lfgMinLevel * .85f) + 0.5f)) && MinLevelCheck) ||
+                ((creatureABInfo->UnmodifiedLevel > (uint8)(((float)mapABInfo->lfgMaxLevel * 1.15f) + 0.5f)) && MaxLevelCheck)
             ) &&
             (
                 !(creature->IsCritter() && creatureABInfo->UnmodifiedLevel >= 5 && creature->GetMaxHealth() > 100) &&
