@@ -53,6 +53,11 @@ AutoBalance.Enable.OtherHeroic=1
 
 AutoBalance.Enable.World=0
 
+# Custom code to disable check to ignore NPCs with a level 15% lower or higher than the map.
+# Not sure what that check is supposed to fix, but it causes event bosses like Ahune to be ignored.
+AutoBalance.Enable.MinLevelCheck = 0
+AutoBalance.Enable.MaxLevelCheck = 0
+
 #
 #     AutoBalance.Disable.PerInstance
 #        Disable all features for the given instance IDs. If an instance ID is not specified here, that instance will follow
