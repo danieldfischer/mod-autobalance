@@ -2274,6 +2274,9 @@ void AddCreatureToMapCreatureList(Creature* creature, bool addToCreatureList = t
                 );
             }
             else
+            //npcbot
+            if (!summoner->IsNPCBotOrPet())
+            //end npcbot
             {
                 AutoBalanceCreatureInfo *summonerABInfo=summoner->CustomData.GetDefault<AutoBalanceCreatureInfo>("AutoBalanceCreatureInfo");
 
