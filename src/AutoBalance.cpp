@@ -28,26 +28,30 @@
 * instance mobs & world bosses' level, health, mana, and damage.
 */
 
-#include "Configuration/Config.h"
-#include "Unit.h"
-#include "Chat.h"
-#include "Creature.h"
-#include "Player.h"
-#include "ObjectMgr.h"
-#include "MapMgr.h"
-#include "World.h"
-#include "Map.h"
-#include "ScriptMgr.h"
-#include "Language.h"
 #include <vector>
 #include "AutoBalance.h"
-#include "ScriptMgrMacros.h"
-#include "Group.h"
-#include "Log.h"
-#include "SharedDefines.h"
 #include <chrono>
-#include "Message.h"
 
+
+#include "Configuration/Config.h"
+#include "Chat.h"
+#include "Creature.h"
+#include "Group.h"
+#include "Language.h"
+#include "Log.h"
+#include "Map.h"
+#include "MapMgr.h"
+#include "Message.h"
+#include "ObjectMgr.h"
+#include "Player.h"
+#include "ScriptMgr.h"
+#include "ScriptMgrMacros.h"
+#include "SharedDefines.h"
+#include "Unit.h"
+#include "World.h"
+
+#include <chrono>
+#include <vector>
 #if AC_COMPILER == AC_COMPILER_GNU
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
@@ -3677,14 +3681,14 @@ class AutoBalance_PlayerScript : public PlayerScript
         {
         }
 
-        void OnLogin(Player *Player) override
+        void OnPlayerLogin(Player *Player) override
         {
             if (EnableGlobal && Announcement) {
                 ChatHandler(Player->GetSession()).SendSysMessage("This server is running the |cff4CFF00AutoBalance |rmodule.");
             }
         }
 
-        virtual void OnLevelChanged(Player* player, uint8 oldlevel) override
+        virtual void OnPlayerLevelChanged(Player* player, uint8 oldlevel) override
         {
             LOG_DEBUG("module.AutoBalance", "AutoBalance:: {}", SPACER);
 
@@ -3709,7 +3713,7 @@ class AutoBalance_PlayerScript : public PlayerScript
             mapABInfo->mapConfigTime = GetCurrentConfigTime();
         }
 
-        void OnGiveXP(Player* player, uint32& amount, Unit* victim, uint8 /*xpSource*/) override
+        void OnPlayerGiveXP(Player* player, uint32& amount, Unit* victim, uint8 /*xpSource*/) override
         {
             Map* map = player->GetMap();
 
@@ -3748,7 +3752,7 @@ class AutoBalance_PlayerScript : public PlayerScript
             }
         }
 
-        void OnBeforeLootMoney(Player* player, Loot* loot) override
+        void OnPlayerBeforeLootMoney(Player* player, Loot* loot) override
         {
             Map* map = player->GetMap();
 
