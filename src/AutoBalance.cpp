@@ -5143,7 +5143,7 @@ public:
         }
     }
 
-    void Creature_SelectLevel(const CreatureTemplate* /* cinfo */, Creature* creature) override
+    void OnCreatureSelectLevel(const CreatureTemplate* /* cinfo */, Creature* creature) override
     {
         // ensure we're in a dungeon with a creature
         //if (
